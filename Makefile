@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-c -Wall
+CFLAGS=-c -Wall -O3
 LDFLAGS=
 SOURCES=src/args.c src/main.c
 OBJECTS=$(SOURCES:.c=.o)
@@ -14,5 +14,5 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm -f $(EXECUTABLE)
-	rm -f *.o
+	@rm -vf $(EXECUTABLE)
+	@find -type f -iname '*.o' -exec rm -vf {} \;

@@ -28,6 +28,7 @@ enum {
 static const char *options[] = {
     "  -h,   --help               Display this help and exit\n",
     "  -n,   --trials             Number of trials\n",
+    "  -q,   --quiet              Don't display each run\n",
     "  -s,   --suppress           Suppress command stdout and stderr\n",
     "  -v,   --verbose            Enable verbose output\n",
     "        --version            Output version information and exit\n",
@@ -36,6 +37,7 @@ static const char *options[] = {
 static const struct option long_options[] = {
     { "help",        optional_argument, NULL, 'h'          },
     { "trials",      required_argument, NULL, 'n'          },
+    { "quiet",       no_argument,       NULL, 'q'          },
     { "verbose",     no_argument,       NULL, 'v'          },
     { "suppress",    no_argument,       NULL, 's'          },
     { "version",     no_argument,       NULL,  OPT_VERSION },
@@ -45,6 +47,7 @@ static const struct option long_options[] = {
 static const struct Args default_args = {
     "avgtime",               // program name
     "\0",                    // command
+    0,                       // no quietness
     0,                       // no verbosity
     10                       // default num. trials
 };
@@ -66,7 +69,7 @@ struct Args *get_args(int argc, char **argv) {
     char c;
     int supress = 0;
     extern char *optarg;
-    while ((c = getopt_long(argc, argv, "hn:sv", long_options, NULL)) != -1) {
+    while ((c = getopt_long(argc, argv, "hn:qsv", long_options, NULL)) != -1) {
         switch (c) {
             case 'n':
                 args->trials = strtoul(optarg, NULL, 10);
@@ -77,6 +80,9 @@ struct Args *get_args(int argc, char **argv) {
                 print_footer(stderr, args->prog_name);
                 free(args);
                 exit(EXIT_SUCCESS);
+                break;
+            case 'q':
+                args->quiet = 1;
                 break;
             case 's':
                 supress = 1;

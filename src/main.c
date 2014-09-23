@@ -11,9 +11,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <signal.h>
-#include <math.h>
 
+#include <wait.h>
+#include <signal.h>
 #include <sys/time.h>
 
 #include "args.h"
@@ -43,19 +43,30 @@ int main(int argc, char **argv) {
     unsigned long int num_runs;
     double total;
     verbose(v, "Start main loop.\n\n");
-    fprintf(stdout, "========================================\n");
+    if (!args->quiet) fprintf(stdout, "========================================\n");
     for (num_runs = 1; num_runs <= args->trials; num_runs++) {
-        if (sigint) break;
+        if (sigint) {
+            fprintf(stderr, "%s: ended prematurely!\n", args->prog_name);
+            break;
+        }
 
         struct timeval start, end;
         long int sec, usec;
         double runtime;
 
-        gettimeofday(&start, NULL);
         verbose(v, "Start command.\n");
-        system(args->command);
+
+        pid_t pid = fork();
+        if (pid == 0) {
+            const char *shell = "/bin/sh";
+            execl(shell, shell, "-c", args->command, NULL);
+        } else {
+            gettimeofday(&start, NULL);
+            waitpid(pid, NULL, 0);
+            gettimeofday(&end, NULL);
+        }
+
         verbose(v, "Finish command.\n");
-        gettimeofday(&end, NULL);
 
         sec  = end.tv_sec  - start.tv_sec;
         usec = end.tv_usec - start.tv_usec;
@@ -64,7 +75,7 @@ int main(int argc, char **argv) {
         runtime += (double) usec / 1000000;
         total   += runtime;
 
-        fprintf(stdout, "Run #%03lu -> %0.3fs\n", num_runs, runtime);
+        if (!args->quiet) fprintf(stdout, "Run #%03lu -> %0.3fs\n", num_runs, runtime);
     }
 
     fprintf(stdout, "========================================\n\n");
@@ -81,7 +92,6 @@ int main(int argc, char **argv) {
 static void sigint_handler(int sig) {
     sigint = 1;
 };
-
 
 // returns 1 if it worked, and 0 if it didn't
 static int verbose(int verbose, const char *string) {

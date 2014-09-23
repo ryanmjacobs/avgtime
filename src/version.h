@@ -11,7 +11,7 @@
 #define VERSION_H
 
 const char *version[] = {
-    "avgtime v0.01\n",
+    "avgtime v0.02\n",
     "Copyright (C) 2014 Ryan Jacobs\n"
 };
 
