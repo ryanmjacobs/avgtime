@@ -1,6 +1,7 @@
 # Binaries
 avgtime
 *.o
+*.gz
 
 # Vim
 .*.swp
