@@ -1,0 +1,7 @@
+# Binaries
+avgtime
+*.o
+
+# Vim
+.*.swp
+.*.swo
