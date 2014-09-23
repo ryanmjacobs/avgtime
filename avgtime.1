@@ -1,0 +1,40 @@
+.\"
+.\"  Copyright (C) 2014 Ryan Jacobs (ryan.mjacobs@gmail.com)
+.\"
+.TH avgtime 1 "September 22, 2014"
+.SH NAME
+avg \- Command Benchmarking Tool
+.SH SYNOPSIS
+.B avgtime
+.B [\-hnqsv] <command>
+.SH DESCRIPTION
+.B avgtime
+is a CLI benchmarking tool for commands. Run a command for
+.B n
+iterations and derive the average execution time, among other things.
+.PP
+.TP
+.B \-h
+Display help and exit
+.TP
+.B \-n
+Number of trials to run
+.TP
+.B \-q
+Don't display each iteration's results
+.TP
+.B \-s
+Suppress the running command's stdout and stderr
+.TP
+.B \-v
+Enable verbose output
+.TP
+.B \--version
+Display version information and exit
+.PP
+.SH SEE ALSO
+.BR avgtime (1)
+.SH BUGS
+Please file bugs, suggestions, and pull requests to <https://github.com/ryanmjacobs/avgtime>
+.SH AUTHOR
+Ryan Jacobs (ryan.mjacobs@gmail.com)

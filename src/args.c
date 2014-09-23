@@ -31,7 +31,7 @@ static const char *options[] = {
     "  -q,   --quiet              Don't display each run\n",
     "  -s,   --suppress           Suppress command stdout and stderr\n",
     "  -v,   --verbose            Enable verbose output\n",
-    "        --version            Output version information and exit\n",
+    "        --version            Display version information and exit\n",
     "\n"
 };
 static const struct option long_options[] = {
