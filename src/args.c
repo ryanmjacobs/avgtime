@@ -3,7 +3,7 @@
  * @brief   Functions dealing with program arguments.
  *
  * @author  Ryan Jacobs <ryan.mjacobs@gmail.com>
- * @date    September 15, 2014
+ * @date    September 22, 2014
  * @bug     No known bugs.
  */
 
@@ -28,7 +28,7 @@ enum {
 static const char *options[] = {
     "  -h,   --help               Display this help and exit\n",
     "  -n,   --trials             Number of trials\n",
-    "  -q,   --quiet              Don't display each run\n",
+    "  -q,   --quiet              Only display final results. Implies -s.\n",
     "  -s,   --suppress           Suppress command stdout and stderr\n",
     "  -v,   --verbose            Enable verbose output\n",
     "        --version            Display version information and exit\n",
@@ -67,7 +67,7 @@ struct Args *get_args(int argc, char **argv) {
     args->prog_name = GLOBAL_PROGNAME = argv[0];
 
     char c;
-    int supress = 0;
+    int suppress = 0;
     extern char *optarg;
     while ((c = getopt_long(argc, argv, "hn:qsv", long_options, NULL)) != -1) {
         switch (c) {
@@ -83,9 +83,10 @@ struct Args *get_args(int argc, char **argv) {
                 break;
             case 'q':
                 args->quiet = 1;
+                suppress = 1;
                 break;
             case 's':
-                supress = 1;
+                suppress = 1;
                 break;
             case 'v':
                 args->verbose = 1;
@@ -107,8 +108,8 @@ struct Args *get_args(int argc, char **argv) {
     if (optind < argc)
         args->command = argv[optind];
 
-    /* Supress command output if -s flag */
-    if (supress)
+    /* Suppress command output if -s flag */
+    if (suppress)
         strcat(args->command, "&>/dev/null");
 
     check_args(args);

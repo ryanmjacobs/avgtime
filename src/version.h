@@ -3,7 +3,7 @@
  * @brief   Contains version information.
  *
  * @author  Ryan Jacobs <ryan.mjacobs@gmail.com>
- * @date    September 15, 2014
+ * @date    September 22, 2014
  * @bug     No known bugs.
  */
 
@@ -11,7 +11,7 @@
 #define VERSION_H
 
 const char *version[] = {
-    "avgtime v0.02\n",
+    "avgtime v0.03\n",
     "Copyright (C) 2014 Ryan Jacobs\n"
 };
 

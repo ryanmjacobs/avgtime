@@ -6,7 +6,7 @@
  *          Contains data structure for program arguments.
  *
  * @author  Ryan Jacobs <ryan.mjacobs@gmail.com>
- * @date    September 15, 2014
+ * @date    September 22, 2014
  * @bug     No known bugs.
  */
 
