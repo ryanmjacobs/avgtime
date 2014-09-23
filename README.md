@@ -1,5 +1,5 @@
-simple_uptime
-=============
+avgtime
+=======
 
 Command Benchmarking Tool
 ---
