@@ -15,7 +15,7 @@
 
 struct Args {
     const char *prog_name;
-    const char *command;
+    char *command;
 
     int verbose;
     unsigned long int trials;

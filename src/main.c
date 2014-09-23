@@ -40,15 +40,36 @@ int main(int argc, char **argv) {
     print_arguments(v, args);
 
     /* Main loop */
-    verbose(v, "Starting main loop.\n");
-    while (!sigint) {
-        struct timeval cur_time;
+    unsigned long int num_runs;
+    double total;
+    verbose(v, "Start main loop.\n\n");
+    fprintf(stdout, "========================================\n");
+    for (num_runs = 1; num_runs <= args->trials; num_runs++) {
+        if (sigint) break;
 
-        /* Get program uptime */
-        gettimeofday(&cur_time, NULL);
-      //cur_time.tv_usec;
-      //cur_time.tv_sec;
+        struct timeval start, end;
+        long int sec, usec;
+        double runtime;
+
+        gettimeofday(&start, NULL);
+        verbose(v, "Start command.\n");
+        system(args->command);
+        verbose(v, "Finish command.\n");
+        gettimeofday(&end, NULL);
+
+        sec  = end.tv_sec  - start.tv_sec;
+        usec = end.tv_usec - start.tv_usec;
+
+        runtime  = (double) sec;
+        runtime += (double) usec / 1000000;
+        total   += runtime;
+
+        fprintf(stdout, "Run #%03lu -> %0.3fs\n", num_runs, runtime);
     }
+
+    fprintf(stdout, "========================================\n\n");
+    fprintf(stdout, "Total = %0.3fs\n", total);
+    fprintf(stdout, "Avg.  = %0.3fs\n", total / num_runs);
 
     /* Free memory and exit */
     fprintf(stderr, "\nQuitting.\n");

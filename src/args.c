@@ -28,6 +28,7 @@ enum {
 static const char *options[] = {
     "  -h,   --help               Display this help and exit\n",
     "  -n,   --trials             Number of trials\n",
+    "  -s,   --suppress           Suppress command stdout and stderr\n",
     "  -v,   --verbose            Enable verbose output\n",
     "        --version            Output version information and exit\n",
     "\n"
@@ -36,6 +37,7 @@ static const struct option long_options[] = {
     { "help",        optional_argument, NULL, 'h'          },
     { "trials",      required_argument, NULL, 'n'          },
     { "verbose",     no_argument,       NULL, 'v'          },
+    { "suppress",    no_argument,       NULL, 's'          },
     { "version",     no_argument,       NULL,  OPT_VERSION },
     { NULL, 0, NULL, 0 }
 };
@@ -62,8 +64,9 @@ struct Args *get_args(int argc, char **argv) {
     args->prog_name = GLOBAL_PROGNAME = argv[0];
 
     char c;
+    int supress = 0;
     extern char *optarg;
-    while ((c = getopt_long(argc, argv, "hn:v", long_options, NULL)) != -1) {
+    while ((c = getopt_long(argc, argv, "hn:sv", long_options, NULL)) != -1) {
         switch (c) {
             case 'n':
                 args->trials = strtoul(optarg, NULL, 10);
@@ -74,6 +77,9 @@ struct Args *get_args(int argc, char **argv) {
                 print_footer(stderr, args->prog_name);
                 free(args);
                 exit(EXIT_SUCCESS);
+                break;
+            case 's':
+                supress = 1;
                 break;
             case 'v':
                 args->verbose = 1;
@@ -94,6 +100,10 @@ struct Args *get_args(int argc, char **argv) {
     /* Get the first non-option argument */
     if (optind < argc)
         args->command = argv[optind];
+
+    /* Supress command output if -s flag */
+    if (supress)
+        strcat(args->command, "&>/dev/null");
 
     check_args(args);
     return args;
