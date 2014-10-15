@@ -2,24 +2,29 @@ avgtime
 =======
 
 Command Benchmarking Tool
----
+-------------------------
+
 avgtime is a CLI benchmarking tool for commands. Run a command for **n**
 iterations and derive the average execution time, among other things.
 
-## Build & Install
+Build & Install
+---------------
 
 ```
 make
 make install
 ```
 
-## Uninstall
+Uninstall
+---------
 
 ```
 make uninstall
 ```
 
-## Command Synopsis
+Command Synopsis
+----------------
+
 ```
 Usage: ./avgtime [-n num_trials] [options] <command>
 avgtime, Command Benchmarking Tool.
@@ -37,6 +42,9 @@ Examples:
 Report bugs to <ryan.mjacobs@gmail.com>
 ```
 
-## License
-MIT License - see LICENSE<br>
+License
+-------
+
+MIT License - see LICENSE
+
 Copyright (c) 2014 Ryan Jacobs
