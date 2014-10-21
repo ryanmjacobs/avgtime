@@ -1,0 +1,26 @@
+# Maintainer: Ryan Jacobs <ryan.mjacobs@gmail.com>
+pkgname=avgtime
+pkgver=0.03
+pkgrel=1
+epoch=
+pkgdesc="avgtime is a CLI benchmarking tool for commands."
+arch=('any')
+url=""
+license=('MIT')
+options=('strip' 'zipman')
+install=
+changelog=ChangeLog
+source=($pkgname-$pkgver.tar.gz)
+noextract=()
+md5sums=('')
+
+build() {
+    cd "$srcdir/$pkgname-$pkgver"
+    make
+}
+
+package() {
+    cd "$srcdir/$pkgname-$pkgver"
+    install -Dm 775 $pkgname   $pkgdir/usr/bin/$pkgname
+    install -Dm 644 $pkgname.1 $pkgdir/usr/share/man/man1/$pkgname.1
+}

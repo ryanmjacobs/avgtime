@@ -1,0 +1,4 @@
+2014-09-22 Ryan Jacobs <ryan.mjacobs@gmail.com>
+	* 0.01-1 : First true implementation. We'll call this v0.01!
+	* 0.02-1 : Add --quiet option. Use fork() and execl(), not system().
+	* 0.03-1 : --quiet now implies --suppress

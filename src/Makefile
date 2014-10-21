@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-c -Wall -O2
 LDFLAGS=
-SOURCES=src/args.c src/main.c
+SOURCES=args.c main.c
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=avgtime
 MAN=avgtime.1
